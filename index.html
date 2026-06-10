@@ -300,6 +300,109 @@
     .bench-run-btn:hover:not(:disabled) { background: var(--bs-charcoal); }
     .bench-run-btn:disabled { background: var(--bs-smoke); color: var(--bs-muted); cursor: not-allowed; }
 
+
+
+    /* ── Login entry page ───────────────────────────────── */
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px 36px;
+      background: var(--bs-page);
+      position: relative;
+    }
+    .login-hero {
+      width: 100%;
+      max-width: 720px;
+      text-align: center;
+      margin-bottom: 34px;
+    }
+    .login-title-stack {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .login-title-stack .bs-page-title,
+    .login-title-stack .workbench-title {
+      text-align: center;
+    }
+    .login-teaser {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--bs-muted);
+    }
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bs-white);
+      border: 1px solid var(--bs-smoke);
+      border-radius: var(--rl);
+      padding: 28px;
+      box-shadow: 0 18px 60px rgba(10,10,10,.04);
+    }
+    .login-field {
+      margin-bottom: 14px;
+    }
+    .login-label {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--bs-ink);
+      margin-bottom: 8px;
+    }
+    .login-input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid var(--bs-smoke);
+      border-radius: var(--r);
+      background: var(--bs-white);
+      color: var(--bs-ink);
+      font-size: 13px;
+      padding: 0 14px;
+      outline: none;
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .login-input:focus {
+      border-color: var(--bs-charcoal);
+      box-shadow: 0 0 0 3px rgba(0,0,0,.05);
+    }
+    .login-button {
+      width: 100%;
+      height: 44px;
+      margin-top: 8px;
+      border: 0;
+      border-radius: var(--r);
+      background: var(--bs-black);
+      color: var(--bs-white);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .login-button:hover { background: var(--bs-charcoal); }
+    .login-footer {
+      position: absolute;
+      left: 32px;
+      right: 32px;
+      bottom: 28px;
+      text-align: center;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--bs-muted);
+    }
+
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 800px) {
       .app { padding: 0 16px 60px; }
@@ -1219,9 +1322,37 @@
       </main>;
     }
 
+
+
+    // LOGIN ENTRY PAGE
+    function LoginPage({onLogin}) {
+      return <main className="login-page">
+        <section className="login-hero">
+          <div className="login-title-stack">
+            <div className="bs-page-title">GenAI<span> Media</span></div>
+            <div className="workbench-title">Workbench</div>
+          </div>
+          <div className="login-teaser">Optimize your AI-Powered Creativity</div>
+        </section>
+        <section className="login-card" aria-label="Login">
+          <div className="login-field">
+            <label className="login-label" htmlFor="user-id">User ID</label>
+            <input id="user-id" className="login-input" type="text" autoComplete="username" />
+          </div>
+          <div className="login-field">
+            <label className="login-label" htmlFor="password">Password</label>
+            <input id="password" className="login-input" type="password" autoComplete="current-password" />
+          </div>
+          <button className="login-button" type="button" onClick={onLogin}>Login</button>
+        </section>
+        <footer className="login-footer">BESTSELLER TECH Creative Solutions</footer>
+      </main>;
+    }
+
         // APP
     // ════════════════════════════════════════════════════════
     function App() {
+      const [isLoggedIn,setIsLoggedIn] = useState(false);
       const [page,setPage] = useState("analyzer");
       const pages = [
         ["analyzer","Use Case \u2192 Workflow"],
@@ -1230,6 +1361,7 @@
         ["prompting","Prompt Lab"],
         ["tools","AI Tools Library"],
       ];
+      if(!isLoggedIn) return <LoginPage onLogin={()=>setIsLoggedIn(true)}/>;
       return <div className="app">
         <div className="nav-shell">
           <Header/>
