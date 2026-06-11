@@ -59,6 +59,11 @@
     }
     button, input, textarea { font-family: inherit; }
 
+    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 2px solid var(--bs-black);
+      outline-offset: 2px;
+    }
+
     /* ── Sticky nav ──────────────────────────────────────── */
     .nav-shell {
       position: sticky;
@@ -67,10 +72,10 @@
       background: var(--bs-white);
       border-bottom: 1px solid var(--bs-smoke);
     }
-    .page-content { padding-top: 40px; }
+    .page-content { padding-top: 40px; overflow: visible; }
 
     /* ── App wrapper ────────────────────────────────────── */
-    .app { max-width: 1120px; margin: 0 auto; padding: 0 32px 80px; }
+    .app { max-width: 1120px; margin: 0 auto; padding: 0 32px 80px; overflow: visible; }
 
     /* ── Header ─────────────────────────────────────────── */
     .header {
@@ -241,13 +246,13 @@
     .notice p { margin: 0; font-size: 11px; color: var(--bs-mid); line-height: 1.7; }
 
     /* ── Bench inner tabs ───────────────────────────────── */
-    .bench-inner-tabs { display: flex; border-bottom: 1px solid var(--bs-smoke); background: var(--bs-fog); overflow-x: auto; scrollbar-width: none; position: -webkit-sticky; position: sticky; top: var(--runtime-sticky-top); z-index: 180; }
-    .bench-inner-tabs::before { content: ""; position: absolute; left: -32px; right: -32px; top: 0; bottom: 0; background: var(--bs-fog); pointer-events: none; z-index: -1; }
-    .bench-inner-tabs::after { content: ""; position: absolute; left: -32px; right: -32px; top: 0; bottom: 0; background: var(--bs-fog); pointer-events: none; z-index: -1; }
+    .bench-inner-tabs { display: flex; border-bottom: 1px solid var(--bs-smoke); background: var(--bs-fog); overflow-x: auto; scrollbar-width: none; position: -webkit-sticky; position: sticky; top: var(--runtime-sticky-top); z-index: 180; box-shadow: 0 -1px 0 var(--bs-page), 0 1px 0 var(--bs-smoke); }
+    .bench-inner-tabs::before { content: ""; position: absolute; left: -100vw; right: -100vw; top: calc(-1 * var(--runtime-sticky-top)); bottom: 0; background: var(--bs-page); pointer-events: none; z-index: -2; }
+    .bench-inner-tabs::after { content: ""; position: absolute; left: -100vw; right: -100vw; top: 0; bottom: 0; background: var(--bs-fog); pointer-events: none; z-index: -1; }
     .bench-inner-tabs::-webkit-scrollbar { display: none; }
-    .tools-filter-sticky { position: -webkit-sticky; position: sticky; top: var(--runtime-sticky-top); z-index: 175; background: var(--bs-page); padding: 12px 0 12px; margin: -12px 0 12px; isolation: isolate; overflow: visible; }
-    .tools-filter-sticky::before { content: ""; position: absolute; left: -32px; right: -32px; top: 0; bottom: 0; background: var(--bs-page); pointer-events: none; z-index: -1; }
-    .tools-filter-sticky::after { content: ""; position: absolute; left: -32px; right: -32px; top: 0; bottom: 0; background: var(--bs-page); pointer-events: none; z-index: -1; }
+    .tools-filter-sticky { position: -webkit-sticky; position: sticky; top: var(--runtime-sticky-top); z-index: 175; background: var(--bs-page); padding: 12px 0 12px; margin: -12px 0 12px; isolation: isolate; overflow: visible; box-shadow: 0 -1px 0 var(--bs-page), 0 1px 0 var(--bs-page); }
+    .tools-filter-sticky::before { content: ""; position: absolute; left: -100vw; right: -100vw; top: calc(-1 * var(--runtime-sticky-top)); bottom: 0; background: var(--bs-page); pointer-events: none; z-index: -2; }
+    .tools-filter-sticky::after { content: ""; position: absolute; left: -100vw; right: -100vw; top: 0; bottom: 0; background: var(--bs-page); pointer-events: none; z-index: -1; }
     .ai-tools-main { overflow: visible; }
     .category-label-chip { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: var(--r); border: 3px solid var(--bs-black); background: var(--bs-white); color: var(--bs-black); letter-spacing: .01em; cursor: default; user-select: none; }
     .bench-inner-tab { font-size: 11px; font-weight: 500; padding: 10px 18px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--bs-muted); cursor: pointer; white-space: nowrap; letter-spacing: .02em; transition: color .12s; }
@@ -422,6 +427,11 @@
     }
     .login-footer strong { font-weight: 700; }
     .login-footer span { font-weight: 400; }
+
+
+    .brand-select-page { justify-content: center; padding-top: 56px; padding-bottom: 72px; }
+    .brand-select-hero { margin-top: 0; margin-bottom: 28px; }
+    .brand-select-card { width: min(960px, calc(100vw - 48px)); background: var(--bs-white); border: 1px solid var(--bs-smoke); border-radius: var(--rl); padding: 24px 28px 28px; box-shadow: 0 18px 50px rgba(0,0,0,.04); }
 
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 800px) {
@@ -760,6 +770,35 @@
       return      {background:"var(--bs-risk-l)",color:"var(--bs-risk)"};
     }
 
+    function safeCopyText(text, onSuccess) {
+      const done = () => { if(typeof onSuccess === "function") onSuccess(); };
+      if(navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(() => {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch(e) {}
+          document.body.removeChild(ta);
+          done();
+        });
+        return;
+      }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch(e) {}
+      document.body.removeChild(ta);
+      done();
+    }
+
     function ModelCard({m, selected, toggle}) {
       const isActive = selected.includes(m.id);
       const isEnt = m.tag === "ENTERPRISE";
@@ -882,7 +921,7 @@
 
     function CopyPromptTabGeneric({prompt, allModels, selectedModels, selectedCriteria, selectedUseCase, dailyVolume, useCases}) {
       const [copied,setCopied] = useState(false);
-      const handleCopy = () => { navigator.clipboard.writeText(prompt).then(()=>{ setCopied(true); setTimeout(()=>setCopied(false),2000); }); };
+      const handleCopy = () => { safeCopyText(prompt, ()=>{ setCopied(true); setTimeout(()=>setCopied(false),2000); }); };
       const selM = allModels.filter(m=>selectedModels.includes(m.id));
       const ucObj = useCases.find(u=>u.id===selectedUseCase);
       return <div style={{padding:20}}>
@@ -1023,20 +1062,14 @@
     }
 
     // ANALYZER — Use Case → Workflow
-    function Analyzer() {
-      const [brand,setBrand]   = useState(null);
+    function Analyzer({selectedBrand}) {
+      const brand = selectedBrand;
       const [market,setMarket] = useState("Global");
       const [uc,setUC]         = useState("lookbook");
       const w = WF[uc];
       const stepColors = ["#1A1A1A","#3C3C3C","#6B6B6B","#9B9B9B"];
 
       return <main>
-        <section style={{marginBottom:32}}>
-          <Divider label="Brand"/>
-          {[0,7,14].map(start=><div className="grid-brands" key={start}>
-            {BRANDS.slice(start,start+7).map(b=><button key={b} className={"brand-btn "+(brand===b?"active":"")} onClick={()=>setBrand(brand===b?null:b)}>{b}</button>)}
-          </div>)}
-        </section>
         <section style={{marginBottom:32}}>
           <Divider label="Market"/>
           <div className="chips">
@@ -1172,8 +1205,7 @@
 
 
     // PROMPTING WORKFLOW
-    function Prompting() {
-      const [selectedBrand,setSelectedBrand] = useState(null);
+    function Prompting({selectedBrand}) {
       const [selectedUseCase,setSelectedUseCase] = useState(null);
       const [generationType,setGenerationType] = useState(null);
       const [selectedModel,setSelectedModel] = useState("");
@@ -1238,15 +1270,9 @@
       };
 
       const updatePrompt = (idx,value) => setPrompts(ps=>ps.map((p,i)=>i===idx?value:p));
-      const copyPrompt = (text) => navigator.clipboard.writeText(text);
+      const copyPrompt = (text) => safeCopyText(text);
 
       return <main>
-        <section style={{marginBottom:32}}>
-          <Divider label="Brand"/>
-          {[0,7,14].map(start=><div className="grid-brands" key={start}>
-            {BRANDS.slice(start,start+7).map(b=><button key={b} className={"brand-btn "+(selectedBrand===b?"active":"")} onClick={()=>{setSelectedBrand(selectedBrand===b?null:b);setPrompts([]);}}>{b}</button>)}
-          </div>)}
-        </section>
         <section className="module-card">
           <div className="module-body">
             <div className="context-section">
@@ -1369,26 +1395,58 @@
       </main>;
     }
 
+    function BrandSelectionPage({selectedBrand,onBrandSelect}) {
+      return <main className="login-page brand-select-page">
+        <section className="login-hero brand-select-hero">
+          <div className="login-title-stack">
+            <div className="bs-page-title">GenAI<span> Media</span></div>
+            <div className="workbench-title">Workbench</div>
+          </div>
+        </section>
+        <section className="brand-select-card" aria-label="Brand Selection">
+          <Divider label="Brand"/>
+          {[0,7,14].map(start=><div className="grid-brands" key={start}>
+            {BRANDS.slice(start,start+7).map(b=><button key={b} className={"brand-btn "+(selectedBrand===b?"active":"")} onClick={()=>onBrandSelect(b)}>{b}</button>)}
+          </div>)}
+        </section>
+        <footer className="login-footer"><strong>BESTSELLER TECH</strong> <span>Creative Solutions</span></footer>
+      </main>;
+    }
+
         // APP
     // ════════════════════════════════════════════════════════
     function App() {
       const [isLoggedIn,setIsLoggedIn] = useState(false);
+      const [selectedBrand,setSelectedBrand] = useState(null);
+      const [hasBrandContext,setHasBrandContext] = useState(false);
       const [page,setPage] = useState("analyzer");
 
+      const refreshStickyOffset = () => {
+        const nav = document.querySelector(".nav-shell");
+        const height = nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
+        document.documentElement.style.setProperty("--runtime-sticky-top", `${height}px`);
+      };
+
       useEffect(() => {
-        const setStickyOffset = () => {
-          const nav = document.querySelector(".nav-shell");
-          const height = nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
-          document.documentElement.style.setProperty("--runtime-sticky-top", `${height}px`);
-        };
-        setStickyOffset();
-        window.addEventListener("resize", setStickyOffset);
-        window.addEventListener("orientationchange", setStickyOffset);
+        refreshStickyOffset();
+        const raf1 = requestAnimationFrame(refreshStickyOffset);
+        const raf2 = requestAnimationFrame(() => requestAnimationFrame(refreshStickyOffset));
+        const nav = document.querySelector(".nav-shell");
+        let ro = null;
+        if(nav && typeof ResizeObserver !== "undefined") {
+          ro = new ResizeObserver(refreshStickyOffset);
+          ro.observe(nav);
+        }
+        window.addEventListener("resize", refreshStickyOffset);
+        window.addEventListener("orientationchange", refreshStickyOffset);
         return () => {
-          window.removeEventListener("resize", setStickyOffset);
-          window.removeEventListener("orientationchange", setStickyOffset);
+          cancelAnimationFrame(raf1);
+          cancelAnimationFrame(raf2);
+          if(ro) ro.disconnect();
+          window.removeEventListener("resize", refreshStickyOffset);
+          window.removeEventListener("orientationchange", refreshStickyOffset);
         };
-      }, [isLoggedIn]);
+      }, [isLoggedIn, hasBrandContext, page]);
       const pages = [
         ["analyzer","Use Case \u2192 Workflow"],
         ["image","Image Models Benchmark"],
@@ -1411,6 +1469,14 @@
       const handleLogin = () => {
         resetViewportToTop();
         setIsLoggedIn(true);
+        setHasBrandContext(false);
+        requestAnimationFrame(resetViewportToTop);
+      };
+
+      const handleBrandSelect = (brand) => {
+        resetViewportToTop();
+        setSelectedBrand(brand);
+        setHasBrandContext(true);
         requestAnimationFrame(resetViewportToTop);
       };
 
@@ -1423,6 +1489,7 @@
       }, [page, isLoggedIn]);
 
       if(!isLoggedIn) return <LoginPage onLogin={handleLogin}/>;
+      if(!hasBrandContext) return <BrandSelectionPage selectedBrand={selectedBrand} onBrandSelect={handleBrandSelect}/>;
       return <div className="app">
         <div className="nav-shell">
           <Header/>
@@ -1431,10 +1498,10 @@
           </div>
         </div>
         <div className="page-content">
-          {page==="analyzer" && <Analyzer/>}
+          {page==="analyzer" && <Analyzer selectedBrand={selectedBrand}/>}
           {page==="image"    && <Benchmark kind="image"/>}
           {page==="video"     && <Benchmark kind="video"/>}
-          {page==="prompting" && <Prompting/>}
+          {page==="prompting" && <Prompting selectedBrand={selectedBrand}/>}
           {page==="tools"     && <Tools/>}
         </div>
       </div>;
