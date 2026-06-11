@@ -42,6 +42,7 @@
       --rl:   8px;
 
       --font: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      --bench-sticky-top: 142px;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -79,7 +80,7 @@
     .bs-wordmark {
       position: absolute;
       top: 20px;
-      right: 0;
+      right: 18px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -101,7 +102,7 @@
       color: var(--bs-muted);
       line-height: 1;
     }
-    .hero-copy { padding-right: 230px; padding-bottom: 18px; }
+    .hero-copy { padding-right: 230px; padding-left: 12px; padding-bottom: 18px; }
     .bs-page-title,
     .workbench-title {
       font-size: clamp(28px, 3.9vw, 42px);
@@ -148,26 +149,36 @@
     .module-head { padding: 18px 28px 16px; border-bottom: 1px solid var(--bs-smoke); background: var(--bs-white); display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
     .module-head-sub { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .16em; color: var(--bs-muted); margin-bottom: 3px; }
     .module-head-title { font-size: 13.5px; font-weight: 600; color: var(--bs-black); letter-spacing: -.01em; }
+    .module-head-titlebar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .module-head-titlebar .divider-badge {
+      background: var(--bs-black);
+      color: var(--bs-white);
+    }
     .module-body { padding: 24px 28px; }
 
     /* ── Brand grid ─────────────────────────────────────── */
     .grid-brands { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 5px; }
     .brand-btn { height: 52px; border-radius: var(--r); border: 1px solid var(--bs-smoke); background: var(--bs-white); display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: 600; font-size: 10px; color: var(--bs-charcoal); letter-spacing: .02em; transition: border-color .12s, background .12s, color .12s; }
     .brand-btn:hover { border-color: var(--bs-charcoal); background: var(--bs-fog); }
-    .brand-btn.active { border: 1.5px solid var(--bs-black); background: var(--bs-black); color: var(--bs-white); }
+    .brand-btn.active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
 
     /* ── Chips ──────────────────────────────────────────── */
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .chip { font-size: 11px; font-weight: 500; padding: 5px 14px; border-radius: var(--r); cursor: pointer; border: 1px solid var(--bs-smoke); background: var(--bs-white); color: var(--bs-mid); letter-spacing: .01em; transition: border-color .12s, color .12s, background .12s; }
     .chip:hover { border-color: var(--bs-charcoal); color: var(--bs-ink); }
     .chip.market-active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
-    .chip.active { background: var(--bs-black); border-color: var(--bs-black); color: var(--bs-white); font-weight: 600; }
+    .chip.active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
 
     /* ── Use case grid ──────────────────────────────────── */
     .use-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 5px; }
     .use-card { text-align: left; padding: 13px 14px 11px; border-radius: var(--r); cursor: pointer; border: 1px solid var(--bs-smoke); background: var(--bs-white); transition: border-color .12s, background .12s; }
     .use-card:hover { border-color: var(--bs-charcoal); }
-    .use-card.active { border: 1.5px solid var(--bs-black); background: var(--bs-fog); }
+    .use-card.active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
     .use-title  { font-size: 11.5px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; color: var(--bs-black); }
     .use-domain { font-size: 9.5px; color: var(--bs-muted); margin-bottom: 3px; letter-spacing: .03em; }
     .use-desc   { font-size: 9.5px; color: var(--bs-muted); line-height: 1.4; }
@@ -193,7 +204,7 @@
     .step-name  { font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--bs-black); }
     .step-tool  { font-size: 10px; font-weight: 600; margin-bottom: 5px; }
     .step-desc  { font-size: 10px; color: var(--bs-mid); line-height: 1.5; }
-    .arrow { width: 32px; display: flex; align-items: center; justify-content: center; color: var(--bs-ash); font-size: 14px; }
+    .arrow { width: 32px; display: flex; align-items: center; justify-content: center; color: var(--bs-black); font-size: 16px; font-weight: 700; }
 
     /* ── Table ──────────────────────────────────────────── */
     table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 520px; }
@@ -212,7 +223,7 @@
     .tips-list { display: flex; flex-direction: column; border: 1px solid var(--bs-smoke); border-radius: var(--r); overflow: hidden; }
     .tip-row { display: flex; align-items: stretch; font-size: 12.5px; line-height: 1.65; border-bottom: 1px solid var(--bs-smoke); }
     .tip-row:last-child { border-bottom: none; }
-    .tip-label { font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--bs-ink); background: var(--bs-fog); min-width: 120px; padding: 14px 16px; flex-shrink: 0; display: flex; align-items: center; border-right: 1px solid var(--bs-smoke); }
+    .tip-label { font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--bs-ink); background: var(--bs-fog); min-width: 150px; width: 150px; padding: 14px 16px; flex-shrink: 0; display: flex; align-items: center; border-right: 1px solid var(--bs-smoke); }
     .tip-row > div:last-child { padding: 14px 18px; color: var(--bs-charcoal); flex: 1; }
 
     /* ── Legal ──────────────────────────────────────────── */
@@ -229,8 +240,12 @@
     .notice p { margin: 0; font-size: 11px; color: var(--bs-mid); line-height: 1.7; }
 
     /* ── Bench inner tabs ───────────────────────────────── */
-    .bench-inner-tabs { display: flex; border-bottom: 1px solid var(--bs-smoke); background: var(--bs-fog); overflow-x: auto; scrollbar-width: none; }
+    .bench-inner-tabs { display: flex; border-bottom: 1px solid var(--bs-smoke); background: var(--bs-fog); overflow-x: auto; scrollbar-width: none; position: sticky; top: calc(var(--bench-sticky-top) + 48px); z-index: 181; }
     .bench-inner-tabs::-webkit-scrollbar { display: none; }
+    .benchmark-title-row { position: sticky; top: var(--bench-sticky-top); z-index: 182; }
+    .tools-filter-sticky { position: -webkit-sticky; position: sticky; top: calc(var(--bench-sticky-top) + 48px); z-index: 180; background: var(--bs-page); padding: 8px 0 12px; margin-bottom: 12px; }
+    .ai-tools-main { overflow: visible; }
+    .category-label-chip { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: var(--r); border: 3px solid var(--bs-black); background: var(--bs-white); color: var(--bs-black); letter-spacing: .01em; cursor: default; user-select: none; }
     .bench-inner-tab { font-size: 11px; font-weight: 500; padding: 10px 18px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--bs-muted); cursor: pointer; white-space: nowrap; letter-spacing: .02em; transition: color .12s; }
     .bench-inner-tab:hover { color: var(--bs-ink); }
     .bench-inner-tab.active { color: var(--bs-black); border-bottom-color: var(--bs-black); font-weight: 600; background: var(--bs-white); }
@@ -240,7 +255,7 @@
     .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
     .model-card { background: var(--bs-white); border: 1px solid var(--bs-smoke); border-radius: var(--r); padding: 12px 14px; cursor: pointer; transition: border-color .12s; }
     .model-card:hover { border-color: var(--bs-charcoal); }
-    .model-card.active { background: var(--bs-fog); border-color: var(--bs-black); border-width: 1.5px; }
+    .model-card.active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
     .model-link { display: inline-flex; align-items: center; gap: 3px; font-size: 9.5px; color: var(--bs-signal-m); font-weight: 500; text-decoration: none; margin-top: 6px; letter-spacing: .01em; }
     .model-link:hover { text-decoration: underline; }
 
@@ -259,13 +274,13 @@
     .criteria-items { padding: 10px 16px; display: flex; flex-direction: column; gap: 4px; }
     .criteria-item { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: var(--r); cursor: pointer; border: 1px solid var(--bs-smoke); background: var(--bs-white); font-size: 12px; color: var(--bs-charcoal); transition: border-color .1s; }
     .criteria-item:hover { border-color: var(--bs-charcoal); }
-    .criteria-item.active { background: var(--bs-fog); border-color: var(--bs-black); color: var(--bs-black); font-weight: 500; }
+    .criteria-item.active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
 
     /* ── Use case list ──────────────────────────────────── */
     .bench-usecase-grid { display: grid; grid-template-columns: 1fr; gap: 4px; }
     .bench-usecase-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: var(--r); cursor: pointer; border: 1px solid var(--bs-smoke); background: var(--bs-white); transition: border-color .1s; }
     .bench-usecase-item:hover { border-color: var(--bs-charcoal); }
-    .bench-usecase-item.active { background: var(--bs-fog); border-color: var(--bs-black); }
+    .bench-usecase-item.active { font-weight: 700; color: var(--bs-black); border-color: var(--bs-charcoal); background: var(--bs-white); }
     .bench-usecase-text strong { font-size: 12px; font-weight: 600; display: block; margin-bottom: 2px; color: var(--bs-black); }
     .bench-usecase-text span   { font-size: 11px; color: var(--bs-mid); line-height: 1.4; }
 
@@ -378,10 +393,10 @@
       width: 100%;
       height: 44px;
       margin-top: 8px;
-      border: 0;
+      border: 1px solid var(--bs-black);
       border-radius: var(--r);
-      background: var(--bs-black);
-      color: var(--bs-white);
+      background: var(--bs-white);
+      color: var(--bs-black);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: .08em;
@@ -389,25 +404,27 @@
       cursor: pointer;
       transition: background .12s;
     }
-    .login-button:hover { background: var(--bs-charcoal); }
+    .login-button:hover { background: var(--bs-fog); }
     .login-footer {
       position: absolute;
       left: 32px;
       right: 32px;
       bottom: 28px;
       text-align: center;
-      font-size: 9.5px;
-      font-weight: 600;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--bs-muted);
+      font-size: 14.25px;
+      letter-spacing: .08em;
+      color: var(--bs-black);
+      white-space: nowrap;
     }
+    .login-footer strong { font-weight: 700; }
+    .login-footer span { font-weight: 400; }
 
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 800px) {
+      :root { --bench-sticky-top: 168px; }
       .app { padding: 0 16px 60px; }
       .bs-wordmark { position: static; align-items: flex-start; margin-bottom: 12px; }
-      .hero-copy   { padding-right: 0; }
+      .hero-copy   { padding-right: 0; padding-left: 0; }
       .hero-pills .sep { display: none; }
       .hero-pills  { gap: 10px; }
       .grid-brands { grid-template-columns: repeat(3, 1fr); }
@@ -416,6 +433,7 @@
       .tab { padding: 12px 14px; font-size: 11px; }
     }
     @media (max-width: 500px) {
+      :root { --bench-sticky-top: 174px; }
       .grid-brands { grid-template-columns: repeat(2, 1fr); }
       .use-grid    { grid-template-columns: repeat(2, 1fr); }
     }
@@ -431,7 +449,7 @@
       green:"var(--bs-ok)", greenL:"var(--bs-ok-l)", amber:"var(--bs-warn)"
     };
 
-    const BRANDS  = ["JACK & JONES","VERO MODA","ONLY","Selected","name it","PIECES","VILA",".OBJECT","NOISY MAY","Y.A.S","MAMALICIOUS","ONLY & SONS","ONLY PLAY","JDY","JJXX","KIDS ONLY","ONLY CARMAKOMA","JUNAROSE","Lil' Atelier","LMTD","BALMOHK"];
+    const BRANDS  = ["JACK & JONES","VERO MODA","ONLY","SELECTED","NAME IT","PIECES","VILA",".OBJECT","NOISY MAY","Y.A.S","MAMALICIOUS","ONLY & SONS","ONLY PLAY","JDY","JJXX","KIDS ONLY","ONLY CARMAKOMA","JUNAROSE","LIL’ ATELIER","LMTD","BALMOHK"];
     const MARKETS = ["Global","Denmark","Germany","Spain","France","Norway","Netherlands","UK","Poland","United States","Canada","India","China","Italy","Turkiye"];
 
     const USE_CASES = [
@@ -922,14 +940,14 @@
       const prompt = isImage ? buildImagePrompt(p) : buildVideoPrompt(p);
 
       return <section>
-        <div style={{background:"white",border:"1px solid #e5e7eb",borderRadius:12,overflow:"hidden"}}>
-          <div style={{background:"white",borderBottom:"1px solid #e5e7eb",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 20px",height:48}}>
+        <div style={{background:"white",border:"1px solid #e5e7eb",borderRadius:12,overflow:"visible"}}>
+          <div className="benchmark-title-row" style={{background:"white",borderBottom:"1px solid #e5e7eb",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 20px",height:48}}>
             <strong style={{fontSize:12}}>{isImage?"Image":"Video"} Models Benchmark Tool</strong>
             <div style={{display:"flex",alignItems:"center",gap:8}}>
               {selectedModels.length>0   && <span className="pill" style={{background:"#DBEAFE",color:"#1D4ED8"}}>{selectedModels.length} models</span>}
               {selectedCriteria.length>0 && <span className="pill" style={{background:"#F5F3FF",color:"#5B21B6"}}>{selectedCriteria.length} criteria</span>}
               {selectedUseCase           && <span className="pill" style={{background:"#ECFDF5",color:"#065F46"}}>use case</span>}
-              <button onClick={runBenchmark} disabled={!selectedModels.length} style={{background:selectedModels.length?C.blue:"#F3F4F6",color:selectedModels.length?"white":"#9CA3AF",border:0,borderRadius:7,padding:"8px 16px",fontWeight:900,cursor:selectedModels.length?"pointer":"not-allowed"}}>Benchmark Models</button>
+
             </div>
           </div>
           <div className="bench-inner-tabs">
@@ -949,10 +967,15 @@
             ? <UseCaseTabGeneric useCases={BENCH_USE_CASES}   selectedUseCase={selectedUseCase} setSelectedUseCase={setSelectedUseCase}/>
             : <UseCaseTabGeneric useCases={VIDEO_USE_CASES}   selectedUseCase={selectedUseCase} setSelectedUseCase={setSelectedUseCase}/>
           )}
-          {innerTab==="context" && <ContextTab dailyVolume={dailyVolume} setDailyVolume={setDailyVolume} reviewerContext={reviewerContext} setReviewerContext={setReviewerContext}
-            volumes={isImage?DAILY_VOLUMES:VIDEO_DAILY_VOLUMES}
-            placeholder={isImage?undefined:"Evaluating for an automated product video pipeline. Speed and brand consistency are primary."}
-          />}
+          {innerTab==="context" && <>
+            <ContextTab dailyVolume={dailyVolume} setDailyVolume={setDailyVolume} reviewerContext={reviewerContext} setReviewerContext={setReviewerContext}
+              volumes={isImage?DAILY_VOLUMES:VIDEO_DAILY_VOLUMES}
+              placeholder={isImage?undefined:"Evaluating for an automated product video pipeline. Speed and brand consistency are primary."}
+            />
+            <div style={{padding:"0 20px 20px"}}>
+              <button className="bench-run-btn" onClick={runBenchmark} disabled={!selectedModels.length}>►BENCHMARK MODELS</button>
+            </div>
+          </>}
           {innerTab==="results" && <div style={{padding:24,minHeight:400}}>
             {!benchmarkResults && <div style={{display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",color:"#9CA3AF",textAlign:"center",minHeight:300}}>
               <div style={{fontSize:36}}>+</div><strong>No benchmark yet</strong>
@@ -1036,15 +1059,21 @@
           </div>
         </section>
         <nav className="sec-nav">
-          {["Workflow","Tools Benchmark Info","Workflow Tools Features","AI Tips","AI Legal Guidelines"].map(x=><button key={x} onClick={()=>document.getElementById(x).scrollIntoView({behavior:"smooth",block:"start"})}>{x}</button>)}
+          {[
+            ["Workflow","Workflow"],
+            ["Tools Benchmark Info","Tools Benchmark"],
+            ["Workflow Tools Features","Workflow Features"],
+            ["AI Tips","AI Tips"],
+            ["AI Legal Guidelines","AI Legal Guidelines"]
+          ].map(([id,label])=><button key={id} onClick={()=>document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"})}>{label}</button>)}
         </nav>
         <section className="card" id="Workflow">
           <div className="workflow-head">
             <div className="eyebrow">Selected Workflow</div>
             <div className="workflow-title">{w.label}</div>
             <div>
-              {brand && <Pill label={brand} bg="var(--bs-fog)" fg="var(--bs-black)"/>}
-              {market!=="Global" && <Pill label={market} bg="var(--bs-signal-l)" fg="var(--bs-signal)"/>}
+              {brand && <Pill label={brand} bg="var(--bs-smoke)" fg="var(--bs-charcoal)"/>}
+              {market!=="Global" && <Pill label={market} bg="var(--bs-smoke)" fg="var(--bs-charcoal)"/>}
               {w.tools.map(t=><Pill key={t} label={t} bg="var(--bs-smoke)" fg="var(--bs-charcoal)"/>)}
             </div>
           </div>
@@ -1062,7 +1091,7 @@
                       <div className="step-desc">{s[2]}</div>
                     </div>
                   </div>
-                  {i<w.steps.length-1 && <div className="arrow">→</div>}
+                  {i<w.steps.length-1 && <div className="arrow">➣</div>}
                 </React.Fragment>)}
               </div>
             </div>
@@ -1070,7 +1099,7 @@
         </section>
         <section className="module-card" id="Tools Benchmark Info">
           <div className="module-head">
-            <div><div className="module-head-sub">Performance Overview</div><div className="module-head-title">Tools Benchmark Info</div></div>
+            <div className="module-head-titlebar"><span className="divider-badge">Tools Benchmark</span><div className="divider-line"/></div>
             <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
               {w.tools.map(t=><Pill key={t} label={t} bg="var(--bs-smoke)" fg="var(--bs-charcoal)"/>)}
             </div>
@@ -1092,7 +1121,7 @@
         </section>
         <section className="module-card" id="Workflow Tools Features">
           <div className="module-head">
-            <div><div className="module-head-sub">Step-by-Step Guidance</div><div className="module-head-title">Workflow Tools Features</div></div>
+            <div className="module-head-titlebar"><span className="divider-badge">Workflow Features</span><div className="divider-line"/></div>
           </div>
           <div className="module-body">
             {w.steps.map((s,i)=><div className="feature-card" key={s[0]}>
@@ -1114,7 +1143,7 @@
         </section>
         <section className="module-card" id="AI Tips">
           <div className="module-head">
-            <div><div className="module-head-sub">Best Practices</div><div className="module-head-title">AI Tips</div></div>
+            <div className="module-head-titlebar"><span className="divider-badge">AI Tips</span><div className="divider-line"/></div>
           </div>
           <div className="module-body">
             <div className="tips-list">
@@ -1122,12 +1151,12 @@
               <div className="tip-row"><div className="tip-label">Quality Risk</div><div>Review hands, fabric texture, logos, seams and scale before stakeholder sign-off.</div></div>
               <div className="tip-row"><div className="tip-label">IP Governance</div><div>Use approved or indemnified models for {market}; avoid living artists, celebrities and protected marks.</div></div>
             </div>
-            <div style={{fontSize:10,color:"var(--bs-muted)",marginTop:12,letterSpacing:".04em"}}>Context: {brand||"Selected brand"} · {market}</div>
+            <div style={{fontSize:10,color:"var(--bs-muted)",marginTop:12,letterSpacing:".04em"}}>Context: {brand||"Selected brand"} · {market} · {w.label}</div>
           </div>
         </section>
         <section className="module-card" id="AI Legal Guidelines">
           <div className="module-head">
-            <div><div className="module-head-sub">Governance Framework</div><div className="module-head-title">AI Legal Guidelines</div></div>
+            <div className="module-head-titlebar"><span className="divider-badge">AI Legal Guidelines</span><div className="divider-line"/></div>
           </div>
           <div className="module-body">
             <div className="legal-grid">
@@ -1145,6 +1174,7 @@
                 </div>
               </div>)}
             </div>
+            <div style={{fontSize:10,color:"var(--bs-muted)",marginTop:12,marginBottom:12,letterSpacing:".04em"}}>Context: {brand||"Selected brand"} · {market} · {w.label}</div>
             <div className="notice">
               <div className="notice-title">Governance &amp; Compliance Notice</div>
               <p>This demo is intended for internal operational reference only and does not constitute formal legal advice. For binding compliance determinations or regulatory interpretation, consult BESTSELLER Legal &amp; Compliance.</p>
@@ -1185,8 +1215,8 @@
           "JACK & JONES":"masculine denim culture, confident casualwear, youthful energy, authentic street style, rugged details and commercial attitude",
           "VERO MODA":"accessible fashion, feminine confidence, effortless trends, contemporary styling, soft editorial elegance and everyday wearability",
           "ONLY":"young, expressive, social-first fashion, playful confidence, trend-driven styling, denim attitude and bold commercial energy",
-          "Selected":"premium Scandinavian minimalism, refined tailoring, responsible quality, calm sophistication, understated luxury and modern essentials",
-          "name it":"playful kidswear, comfort, softness, durability, joyful color accents, practical styling and family-friendly warmth",
+          "SELECTED":"premium Scandinavian minimalism, refined tailoring, responsible quality, calm sophistication, understated luxury and modern essentials",
+          "NAME IT":"playful kidswear, comfort, softness, durability, joyful color accents, practical styling and family-friendly warmth",
           "PIECES":"fashion accessories, feminine details, trend accents, styling versatility, playful layering and affordable wardrobe updates",
           "VILA":"feminine elegance, romantic modernity, soft silhouettes, refined details, calm confidence and occasion-ready styling",
           ".OBJECT":"minimal contemporary womenswear, clean lines, muted palettes, thoughtful simplicity, architectural shapes and elevated everyday pieces",
@@ -1200,7 +1230,7 @@
           "KIDS ONLY":"mini-me fashion, playful confidence, color, movement, comfort, trend-led kids styling and joyful attitude",
           "ONLY CARMAKOMA":"inclusive womenswear, confident curves, flattering fit, modern femininity, body positivity and trend relevance",
           "JUNAROSE":"curve-focused femininity, flattering silhouettes, confidence, comfort, versatile styling and accessible elegance",
-          "Lil' Atelier":"poetic childrenswear, natural textures, soft colors, Nordic calm, handcrafted feeling and delicate storytelling",
+          "LIL’ ATELIER":"poetic childrenswear, natural textures, soft colors, Nordic calm, handcrafted feeling and delicate storytelling",
           "LMTD":"tween fashion, expressive youth culture, casual confidence, trend-led styling, comfort and social energy",
           "BALMOHK":"premium contemporary expression, refined fashion attitude, clean styling, modern confidence and distinctive visual edge"
         };
@@ -1232,12 +1262,9 @@
           </div>)}
         </section>
         <section className="module-card">
-          <div className="module-head">
-            <div><div className="module-head-sub">Prompt Generation</div><div className="module-head-title">Fashion Retail Prompt Lab Workflow</div></div>
-          </div>
           <div className="module-body">
             <div className="context-section">
-              <div className="context-label">1. Use Case</div>
+              <Divider label="Use Case"/>
               <div className="use-grid">
                 {USE_CASES.map(u=><button key={u.id} className={"use-card "+(selectedUseCase===u.id?"active":"")} onClick={()=>{setSelectedUseCase(u.id);setPrompts([]);}}>
                   <div className="use-title">{u.label}</div>
@@ -1247,13 +1274,13 @@
               </div>
             </div>
             <div className="context-section">
-              <div className="context-label">2. Generation Type</div>
+              <Divider label="Generation Type"/>
               <div className="chips">
                 {["Image","Video"].map(t=><button key={t} className={"chip "+(generationType===t?"active":"")} onClick={()=>{setGenerationType(t);setSelectedModel("");setPrompts([]);}}>{t}</button>)}
               </div>
             </div>
             <div className="context-section">
-              <div className="context-label">3. AI Model</div>
+              <Divider label="AI Model"/>
               <select value={selectedModel} disabled={!generationType} onChange={e=>{setSelectedModel(e.target.value);setPrompts([]);}} style={{width:"100%",border:"1px solid var(--bs-smoke)",borderRadius:"var(--r)",padding:"10px 14px",fontSize:13,color:"var(--bs-ink)",background:"var(--bs-white)",outline:"none"}}>
                 <option value="">{generationType ? `Select one ${generationType.toLowerCase()} model` : "Select generation type first"}</option>
                 {modelOptions.map(m=><option key={m.id} value={m.id}>{m.name} — {m.vendor}</option>)}
@@ -1289,7 +1316,9 @@
 
     // AI TOOLS LIBRARY
     function Tools() {
-      const list = rankedTools(TOOL_LIB);
+      const [filter,setFilter] = useState("Image");
+      const filters = ["Image","Video","Platform","Post-Prod"];
+      const list = rankedTools(TOOL_LIB).filter(t=>t[2]===filter);
       const tagStyle = (cat) => {
         if(cat==="Image")     return {background:"var(--bs-signal-l)",color:"var(--bs-signal)"};
         if(cat==="Video")     return {background:"var(--bs-warn-l)",  color:"var(--bs-warn)"};
@@ -1297,8 +1326,14 @@
         if(cat==="Post-Prod") return {background:"var(--bs-ok-l)",    color:"var(--bs-ok)"};
         return {background:"var(--bs-smoke)",color:"var(--bs-charcoal)"};
       };
-      return <main>
-        <div style={{fontSize:11,color:"var(--bs-muted)",marginBottom:16,letterSpacing:".04em"}}>{list.length} {list.length!==1?"tools":"tool"} shown · ordered by popularity, efficiency and creativity</div>
+      return <main className="ai-tools-main">
+        <div className="tools-filter-sticky">
+          <div className="chips" style={{marginBottom:12}}>
+            <span className="category-label-chip">Categories:</span>
+            {filters.map(f=><button className={"chip "+(filter===f?"active":"")} key={f} onClick={()=>setFilter(f)}>{f}</button>)}
+          </div>
+          <div style={{fontSize:11,color:"var(--bs-muted)",letterSpacing:".04em"}}>{list.length} {list.length!==1?"tools":"tool"} shown · ordered by popularity, efficiency and creativity</div>
+        </div>
         <div className="tool-grid">
           {list.map((t,i)=><div className="tool-card" key={t[0]+"-"+i}>
             <div className="tool-head">
@@ -1323,7 +1358,6 @@
     }
 
 
-
     // LOGIN ENTRY PAGE
     function LoginPage({onLogin}) {
       return <main className="login-page">
@@ -1343,9 +1377,9 @@
             <label className="login-label" htmlFor="password">Password</label>
             <input id="password" className="login-input" type="password" autoComplete="current-password" />
           </div>
-          <button className="login-button" type="button" onClick={onLogin}>Login</button>
+          <button className="login-button" type="button" onClick={onLogin}>LOGIN</button>
         </section>
-        <footer className="login-footer">BESTSELLER TECH Creative Solutions</footer>
+        <footer className="login-footer"><strong>BESTSELLER TECH</strong> <span>Creative Solutions</span></footer>
       </main>;
     }
 
